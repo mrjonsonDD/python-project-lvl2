@@ -22,5 +22,8 @@ gendiff:
 test:
 	poetry run pytest
 
-test-cov:
+test-coverage:
 	poetry run pytest --cov=gendiff --cov-report xml
+
+gendiff1:
+	poetry run gendiff tests/fixtures/file1.json tests/fixtures/file2.json 	
