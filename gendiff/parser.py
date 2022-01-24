@@ -10,7 +10,7 @@ def open_file(file_path):
 
 
 def get_format(file_path):
-    filename, file_extension = os.path.splitext(file_path)[1]
+    file_extension = os.path.splitext(file_path)[1]
     return file_extension
 
 

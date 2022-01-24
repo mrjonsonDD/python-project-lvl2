@@ -27,3 +27,6 @@ test-coverage:
 
 gendiff1:
 	poetry run gendiff tests/fixtures/file1.json tests/fixtures/file2.json 	
+
+gendiff2:
+	poetry run gendiff tests/fixtures/file1.yaml tests/fixtures/file2.yaml 	
