@@ -30,3 +30,9 @@ gendiff1:
 
 gendiff2:
 	poetry run gendiff tests/fixtures/file1.yaml tests/fixtures/file2.yaml 	
+
+gendiff3:
+	poetry run gendiff tests/fixtures/file_tree1.json tests/fixtures/file_tree2.json	
+
+gendiff4:
+	poetry run gendiff tests/fixtures/file_tree1.yaml tests/fixtures/file_tree2.yaml 		

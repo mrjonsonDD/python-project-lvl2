@@ -6,7 +6,7 @@ from pathlib import Path
 
 def test1(file1, file2):
     base_path = Path(__file__).parent
-    file_path = (base_path / "../tests/fixtures/plain_text.txt").resolve()
+    file_path = (base_path / "../tests/fixtures/diff_file_text.txt").resolve()
     file1 = prepare_file('tests/fixtures/file1.json')
     file2 = prepare_file('tests/fixtures/file2.json')
     with open(file_path, 'r') as f:
@@ -15,7 +15,7 @@ def test1(file1, file2):
 
 def tast2(file1, file2):
     base_path = Path(__file__).parent
-    file_path = (base_path / "../tests/fixtures/plain_text.txt").resolve()
+    file_path = (base_path / "../tests/fixtures/diff_file_text.txt").resolve()
     file1 = prepare_file('tests/fixtures/file1.yaml')
     file2 = prepare_file('tests/fixtures/file2.yaml')
     with open(file_path, 'r') as f:

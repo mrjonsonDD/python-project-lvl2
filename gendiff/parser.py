@@ -10,8 +10,8 @@ def open_file(file_path):
 
 
 def get_format(file_path):
-    file_extension = os.path.splitext(file_path)[1]
-    return file_extension
+    file_format = os.path.splitext(file_path)[1]
+    return file_format
 
 
 def parse_file(file_format):
