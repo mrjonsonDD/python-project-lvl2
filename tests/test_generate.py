@@ -1,5 +1,5 @@
 import pytest
-import os.path
+import os
 from gendiff.generate import generate_diff
 
 

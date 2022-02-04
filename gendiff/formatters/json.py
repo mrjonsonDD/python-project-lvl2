@@ -2,7 +2,7 @@ import json
 
 
 def format_json(diff):
-    return json.dumps(sort_difference(diff), indent=2)
+    return json.dumps(sort_difference(diff))
 
 
 def sort_difference(diff):

@@ -18,7 +18,7 @@ def format_plain(diff, key_path=None):  # noqa: C901
         key_path = []
     for key, value in sorted(diff.items()):
         key_path.append(key)
-        status, *rest = value[0], value[1:]
+        status, rest = value[0], value[1:]
         if status == UNCHANGED:
             key_path.pop()
             continue
