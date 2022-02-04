@@ -41,12 +41,13 @@ def format_plain(diff, key_path=None):  # noqa: C901
 
 
 def get_value(value):
-    if type(value) in (list, dict):
+    if isinstance(value, dict) or isinstance(value, list):
         return '[complex value]'
     elif isinstance(value, bool):
         return str(value).lower()
     elif value is None:
         return 'null'
     elif isinstance(value, str):
-        return f"'{value}'"
-    return value
+        return "'{}'".format(value)
+    else:
+        return value

@@ -19,11 +19,8 @@ lint:
 gendiff:
 	poetry run gendiff -h
 
-
-.PHONY: test
 test:
 	poetry run pytest
-
 
 test-coverage:
 	poetry run pytest --cov=gendiff --cov-report xml

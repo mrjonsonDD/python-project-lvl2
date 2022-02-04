@@ -18,16 +18,17 @@ def generate_diff(file1, file2, format='stylish'):
 
 def make_diff(first_file, second_file):
     diff = {}
-    joint_keys = first_file.keys() and second_file.keys()
+    joint_keys = first_file.keys() | second_file.keys()
     deleted_keys = first_file.keys() - second_file.keys()
     added_keys = second_file.keys() - first_file.keys()
+    for key in joint_keys:
+        diff[key] = create_intersection_diff(
+            first_file.get(key), second_file.get(key))
     for key in added_keys:
         diff[key] = [ADDED, second_file.get(key)]
     for key in deleted_keys:
         diff[key] = [DELETED, first_file.get(key)]
-    for key in joint_keys:
-        diff[key] = create_intersection_diff(
-            first_file.get(key), second_file.get(key))
+    
     return diff
 
 
