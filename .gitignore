@@ -12,3 +12,8 @@ env/
 .env
 venv/
 .venv
+coverage.xml
+.coverage
+setup.cfg
+.idea
+tests/hexlet test/
