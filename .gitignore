@@ -5,6 +5,7 @@ __pycache__/
 */.ipynb_checkpoints/*
 
 # Distribution / packaging
+.vscode
 dist/
 .dist
 env/
