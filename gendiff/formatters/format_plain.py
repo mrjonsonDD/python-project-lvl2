@@ -18,10 +18,10 @@ def get_plain(diff_structure):  # noqa: WPS231, WPS221, C901
         result string.
     """
     result_string = []
-    return '\n'.join(_for_plain(diff_structure, '', result_string))
+    return '\n'.join(for_plain(diff_structure, '', result_string))
 
 
-def _for_plain(diff, path_prefix, string):  # noqa: WPS231, WPS221, C901
+def for_plain(diff, path_prefix, string):  # noqa: WPS231, WPS221, C901
     for key in sorted(diff.keys()):
         path = get_path(path_prefix, key)
         if diff[key].get(CONDITION) == ADDED:
@@ -40,7 +40,7 @@ def _for_plain(diff, path_prefix, string):  # noqa: WPS231, WPS221, C901
         elif diff[key].get(CONDITION) == UNCHANGED:
             continue
         elif diff[key].get(CONDITION) == NESTED:
-            string += _for_plain(diff[key][VALUE], path + '.', [])
+            string += for_plain(diff[key][VALUE], path + '.', [])
     return string
 
 

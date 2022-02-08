@@ -28,12 +28,12 @@ def generate_diff(file_path1, file_path2, formatter_name=STYLISH):
     """
     content_one = parse_file(file_path1)
     content_two = parse_file(file_path2)
-    return _select_formatter(formatter_name)(
-        _gen_diff(content_one, content_two),
+    return get_select_formatter(formatter_name)(
+        get_gen_diff(content_one, content_two),
     )
 
 
-def _gen_diff(first_dict, second_dict):  # noqa: C901, WPS231, WPS210, WPS221, E501
+def get_gen_diff(first_dict, second_dict):  # noqa: C901, WPS231, WPS210, WPS221, E501
     diff_diff = {}
     shared_keys = (first_dict.keys() & second_dict.keys())
     deleted_keys = (first_dict.keys() - second_dict.keys())
@@ -46,7 +46,7 @@ def _gen_diff(first_dict, second_dict):  # noqa: C901, WPS231, WPS210, WPS221, E
         elif isinstance(second_dict.get(key2), dict) and isinstance(first_dict.get(key2), dict):  # noqa:E501, WPS221
             diff_diff[key2] = {
                 CONDITION: NESTED,
-                VALUE: _gen_diff(first_dict[key2], second_dict[key2]),
+                VALUE: get_gen_diff(first_dict[key2], second_dict[key2]),
             }
         else:
             diff_diff[key2] = {
@@ -61,7 +61,7 @@ def _gen_diff(first_dict, second_dict):  # noqa: C901, WPS231, WPS210, WPS221, E
     return diff_diff
 
 
-def _select_formatter(format_name):
+def get_select_formatter(format_name):
     """Select formatter for output format.
     Returns:
         output format

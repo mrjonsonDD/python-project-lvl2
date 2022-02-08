@@ -21,10 +21,10 @@ def get_stylish(diff_structure):
         result string.
     """
     tabs = ''
-    return '{{\n{0}}}'.format(''.join(_for_stylish(diff_structure, tabs)))
+    return '{{\n{0}}}'.format(''.join(for_stylish(diff_structure, tabs)))
 
 
-def _for_stylish(diff, tab):
+def for_stylish(diff, tab):
     string = []
     for key in sorted(diff.keys()):
         condition = UNCHANGED
@@ -58,7 +58,7 @@ def format_value(data_items, tab):
         return format_value(data_items[VALUE], tab)
     elif isinstance(data_items, dict):
         return '{{\n{0}{1}}}'.format(
-            ''.join(_for_stylish(data_items, tab)),
+            ''.join(for_stylish(data_items, tab)),
             tab,
         )
     return converting_stylish(data_items)
