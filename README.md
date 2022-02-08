@@ -1,5 +1,5 @@
 ### Tests, coverage and linter status:
 [![Actions Status](https://github.com/mrjonsonDD/python-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/mrjonsonDD/python-project-lvl2/actions)
-<a href="https://codeclimate.com/github/codeclimate/codeclimate/maintainability"><img src="https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability" /></a>
-<a href="https://codeclimate.com/github/codeclimate/codeclimate/test_coverage"><img src="https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/test_coverage" /></a>
-git filter-branch --force --index-filter "git rm --cached --ignore-unmatch .env" --prune-empty --tag-name-filter cat -- --all
+<a href="https://codeclimate.com/github/mrjonsonDD/python-project-lvl2/maintainability"><img src="https://api.codeclimate.com/v1/badges/b087bb49d759b9c571fd/maintainability" /></a>
+<a href="https://codeclimate.com/github/mrjonsonDD/python-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b087bb49d759b9c571fd/test_coverage" /></a>
+
