@@ -1,5 +1,5 @@
 # GenDiff:
-<hr>
+
 
 ### Tests, coverage and linter status:
 [![Actions Status](https://github.com/mrjonsonDD/python-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/mrjonsonDD/python-project-lvl2/actions)
@@ -13,4 +13,5 @@ Has special JSON ouput.
 ## Installation and Running
 
 $ python3 -m pip install --user hexlet-code
+
 $ gendiff filepath1 filepath2
