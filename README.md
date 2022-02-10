@@ -8,11 +8,12 @@
 
 ## Supports formats: 
 
-<ul>  'stylish' output (--format stylish).
+<ul>  
+ -'stylish' output (--format stylish).
 
- 'plain' text output (--format plain).
+ -'plain' text output (--format plain).
 
- 'json' output (--format json).'.json' and '.yaml'/'.yml'.
+ -'json' output (--format json).'.json' and '.yaml'/'.yml'.
 
 Stylish (default)</ul>
 
@@ -24,7 +25,8 @@ Stylish (default)</ul>
 $ gendiff filepath1 filepath2</ul>
 
 ## Optional arguments:
-<ul>  -f, --format [type]  Output format: 'plain', 'json' or (default: 'stylish')
-  -h, --help           output usage information</ul>
+<ul>  
+ -f, --format [type]  Output format: 'plain', 'json' or (default: 'stylish')
+ -h, --help           output usage information</ul>
   
 ## Use gendiff:
