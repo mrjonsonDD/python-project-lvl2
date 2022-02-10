@@ -8,14 +8,13 @@
 
 ## Supports formats: 
 
-<ul>  
- -'stylish' output (--format stylish).
+<ul>-'stylish' output (--format stylish).
 
  -'plain' text output (--format plain).
 
  -'json' output (--format json).'.json' and '.yaml'/'.yml'.
 
-Stylish (default)</ul>
+'stylish' - default</ul>
 
 
 ## Installation and Running
