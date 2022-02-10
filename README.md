@@ -12,6 +12,6 @@ Has special JSON ouput.
 
 ## Installation and Running
 
-$ python3 -m pip install --user hexlet-code
+$ pip install --user git+https://github.com/mrjonsonDD/python-project-lvl2.git
 
 $ gendiff filepath1 filepath2
