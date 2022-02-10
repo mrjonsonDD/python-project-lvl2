@@ -12,6 +12,6 @@ Has special JSON ouput.
 
 ## Installation and Running
 
-<p>$ pip install --user git+https://github.com/mrjonsonDD/python-project-lvl2.git</p>
+<ul>$ pip install --user git+https://github.com/mrjonsonDD/python-project-lvl2.git</ul>
 
 <p>$ gendiff filepath1 filepath2</p>
