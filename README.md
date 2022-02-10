@@ -6,9 +6,16 @@
 <a href="https://codeclimate.com/github/mrjonsonDD/python-project-lvl2/maintainability"><img src="https://api.codeclimate.com/v1/badges/b087bb49d759b9c571fd/maintainability" /></a>
 <a href="https://codeclimate.com/github/mrjonsonDD/python-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/b087bb49d759b9c571fd/test_coverage" /></a>
 
-Supports formats: '.json' and '.yaml'/'.yml';
-Supports two native ouput formats: Plain, Stylish (default);
-Has special JSON ouput.
+## Supports formats: 
+
+<ul>- 'stylish' output (--format stylish).
+
+- 'plain' text output (--format plain).
+
+- 'json' output (--format json).'.json' and '.yaml'/'.yml'.
+
+Stylish (default)</ul>
+
 
 ## Installation and Running
 
