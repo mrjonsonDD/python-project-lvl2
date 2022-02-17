@@ -26,7 +26,7 @@ from gendiff.gendiff_engine import generate_diff
     ('tests/fixtures/file_tree1.yaml', 'tests/fixtures/file_tree2.yaml',
      JSON, 'tests/fixtures/result_json.txt'),
 ])
-def test_formatters(path1, path2, formatter, path_to_result):  # noqa: D103
+def test_formatters(path1, path2, formatter, path_to_result):
     assert generate_diff(
         path1,
         path2,
@@ -34,7 +34,7 @@ def test_formatters(path1, path2, formatter, path_to_result):  # noqa: D103
     ) == open_result_file(path_to_result)
 
 
-def open_result_file(path_to_result):  # noqa: D103
+def open_result_file(path_to_result):
     with open(path_to_result) as file_result:
         result = file_result.read()
     return result

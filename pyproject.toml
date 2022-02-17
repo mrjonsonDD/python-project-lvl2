@@ -3,8 +3,12 @@ name = "hexlet-code"
 version = "0.1.0"
 description = "Show diff between two files"
 authors = ["mrJonson <mr.Jonson@mail.ru>"]
+repository = "https://github.com/mrjonsonDD/python-project-lvl2"
 packages = [
   {include = "gendiff" },
+]
+classifiers = [
+    "Topic :: Education"
 ]
 
 [tool.poetry.dependencies]

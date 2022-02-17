@@ -10,7 +10,7 @@ from gendiff.constants import (  # noqa: WPS235
 )
 
 
-def get_plain(diff_structure):  # noqa: WPS231, WPS221, C901
+def get_plain(diff_structure):
     """Convert format_dict to plain format.
     Parameters:
         diff_structure(dict): dict of difference.
@@ -21,7 +21,7 @@ def get_plain(diff_structure):  # noqa: WPS231, WPS221, C901
     return '\n'.join(for_plain(diff_structure, '', result_string))
 
 
-def for_plain(diff, path_prefix, string):  # noqa: WPS231, WPS221, C901
+def for_plain(diff, path_prefix, string):  # noqa: C901
     for key in sorted(diff.keys()):
         path = get_path(path_prefix, key)
         if diff[key].get(CONDITION) == ADDED:
