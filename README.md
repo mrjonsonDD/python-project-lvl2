@@ -29,3 +29,5 @@ $ gendiff filepath1 filepath2</ul>
  -h, --help           output usage information</ul>
   
 ## Use gendiff:
+
+https://asciinema.org/a/0xKt7FcteUM12Iyu4xv28JV4E
