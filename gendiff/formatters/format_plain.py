@@ -2,7 +2,7 @@
 from gendiff.constants import (  # noqa: WPS235
     ADDED,
     CHANGED,
-    CONDITION,
+    TYPE,
     DELETED,
     NESTED,
     UNCHANGED,
@@ -24,22 +24,22 @@ def get_plain(diff_structure):
 def for_plain(diff, path_prefix, string):  # noqa: C901
     for key in sorted(diff.keys()):
         path = get_path(path_prefix, key)
-        if diff[key].get(CONDITION) == ADDED:
+        if diff[key].get(TYPE) == ADDED:
             string.append("Property '{0}' was added with value: {1}".format(
                 path,
                 converting_plain(diff[key][VALUE]),
             ))
-        elif diff[key].get(CONDITION) == DELETED:
+        elif diff[key].get(TYPE) == DELETED:
             string.append("Property '{0}' was removed".format(path))
-        elif diff[key].get(CONDITION) == CHANGED:
+        elif diff[key].get(TYPE) == CHANGED:
             string.append("Property '{0}' was updated. From {1} to {2}".format(
                 path,
                 converting_plain(diff[key][VALUE][DELETED]),
                 converting_plain(diff[key][VALUE][ADDED]),
             ))
-        elif diff[key].get(CONDITION) == UNCHANGED:
+        elif diff[key].get(TYPE) == UNCHANGED:
             continue
-        elif diff[key].get(CONDITION) == NESTED:
+        elif diff[key].get(TYPE) == NESTED:
             string += for_plain(diff[key][VALUE], path + '.', [])
     return string
 

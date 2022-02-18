@@ -1,44 +1,44 @@
 {
   "common": {
-    "condition": "nested",
+    "type": "nested",
     "value": {
       "follow": {
-        "condition": "added",
+        "type": "added",
         "value": false
       },
       "setting1": {
-        "condition": "unchanged",
+        "type": "unchanged",
         "value": "Value 1"
       },
       "setting2": {
-        "condition": "deleted",
+        "type": "deleted",
         "value": 200
       },
       "setting3": {
-        "condition": "changed",
+        "type": "changed",
         "value": {
           "added": null,
           "deleted": true
         }
       },
       "setting4": {
-        "condition": "added",
+        "type": "added",
         "value": "blah blah"
       },
       "setting5": {
-        "condition": "added",
+        "type": "added",
         "value": {
           "key5": "value5"
         }
       },
       "setting6": {
-        "condition": "nested",
+        "type": "nested",
         "value": {
           "doge": {
-            "condition": "nested",
+            "type": "nested",
             "value": {
               "wow": {
-                "condition": "changed",
+                "type": "changed",
                 "value": {
                   "added": "so much",
                   "deleted": ""
@@ -47,11 +47,11 @@
             }
           },
           "key": {
-            "condition": "unchanged",
+            "type": "unchanged",
             "value": "value"
           },
           "ops": {
-            "condition": "added",
+            "type": "added",
             "value": "vops"
           }
         }
@@ -59,21 +59,21 @@
     }
   },
   "group1": {
-    "condition": "nested",
+    "type": "nested",
     "value": {
       "baz": {
-        "condition": "changed",
+        "type": "changed",
         "value": {
           "added": "bars",
           "deleted": "bas"
         }
       },
       "foo": {
-        "condition": "unchanged",
+        "type": "unchanged",
         "value": "bar"
       },
       "nest": {
-        "condition": "changed",
+        "type": "changed",
         "value": {
           "added": "str",
           "deleted": {
@@ -84,7 +84,7 @@
     }
   },
   "group2": {
-    "condition": "deleted",
+    "type": "deleted",
     "value": {
       "abc": 12345,
       "deep": {
@@ -93,7 +93,7 @@
     }
   },
   "group3": {
-    "condition": "added",
+    "type": "added",
     "value": {
       "deep": {
         "id": {

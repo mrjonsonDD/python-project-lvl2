@@ -4,7 +4,7 @@ ADDED = 'added'
 UNCHANGED = 'unchanged'
 CHANGED = 'changed'
 NESTED = 'nested'
-CONDITION = 'condition'
+TYPE = 'type'
 VALUE = 'value'
 # Formatters const
 STYLISH = 'stylish'

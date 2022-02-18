@@ -2,7 +2,7 @@
 from gendiff.constants import (
     ADDED,
     CHANGED,
-    CONDITION,
+    TYPE,
     DELETED,
     NESTED,
     UNCHANGED,
@@ -29,7 +29,7 @@ def for_stylish(diff, tab):
     for key in sorted(diff.keys()):
         condition = UNCHANGED
         if isinstance(diff[key], dict):
-            condition = diff[key].get(CONDITION)
+            condition = diff[key].get(TYPE)
         if condition == CHANGED:
             string.append(FORMAT_STRING.format(
                 tab,
