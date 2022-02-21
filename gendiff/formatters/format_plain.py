@@ -10,6 +10,11 @@ from gendiff.constants import (  # noqa: WPS235
 )
 
 
+PROPETTY_ADDED = "Property '{0}' was added with value: {1}"
+PROPETTY_REMOVED = "Property '{0}' was removed"
+PROPETTY_UPDATED = "Property '{0}' was updated. From {1} to {2}"
+
+
 def get_plain(diff_structure):
     """Convert format_dict to plain format.
     Parameters:
@@ -26,14 +31,14 @@ def for_plain(diff, path_prefix):  # noqa: C901
     for key in sorted(diff.keys()):
         path = get_path(path_prefix, key)
         if diff[key].get(TYPE) == ADDED:
-            str_list.append("Property '{0}' was added with value: {1}".format(
+            str_list.append(PROPETTY_ADDED.format(
                 path,
                 converting_plain(diff[key][VALUE]),
             ))
         elif diff[key].get(TYPE) == DELETED:
-            str_list.append("Property '{0}' was removed".format(path))
+            str_list.append(PROPETTY_REMOVED.format(path))
         elif diff[key].get(TYPE) == CHANGED:
-            str_list.append("Property '{0}' was updated. From {1} to {2}".format(
+            str_list.append(PROPETTY_UPDATED.format(
                 path,
                 converting_plain(diff[key][VALUE][DELETED]),
                 converting_plain(diff[key][VALUE][ADDED]),
