@@ -25,32 +25,32 @@ def get_stylish(diff_structure):
 
 
 def for_stylish(diff, tab):
-    string = []
+    str_list = []
     for key in sorted(diff.keys()):
         condition = UNCHANGED
         if isinstance(diff[key], dict):
             condition = diff[key].get(TYPE)
         if condition == CHANGED:
-            string.append(FORMAT_STRING.format(
+            str_list.append(FORMAT_STRING.format(
                 tab,
                 get_key_prefix(DELETED),
                 key,
                 format_value(diff[key][VALUE][DELETED], tab + OFFSETS),
             ))
-            string.append(FORMAT_STRING.format(
+            str_list.append(FORMAT_STRING.format(
                 tab,
                 get_key_prefix(ADDED),
                 key,
                 format_value(diff[key][VALUE][ADDED], tab + OFFSETS),
             ))
         elif condition in (ADDED, DELETED, NESTED, UNCHANGED, None):
-            string.append(FORMAT_STRING.format(
+            str_list.append(FORMAT_STRING.format(
                 tab,
                 get_key_prefix(condition),
                 key,
                 format_value(diff[key], tab + OFFSETS),
             ))
-    return string
+    return str_list
 
 
 def format_value(data_items, tab):
@@ -64,10 +64,10 @@ def format_value(data_items, tab):
     return converting_stylish(data_items)
 
 
-def get_key_prefix(value):
-    if value == DELETED:
+def get_key_prefix(node_type_name):
+    if node_type_name == DELETED:
         return '  - '
-    elif value == ADDED:
+    elif node_type_name == ADDED:
         return '  + '
     return '    '
 

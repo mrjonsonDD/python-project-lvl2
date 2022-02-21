@@ -31,10 +31,10 @@ def test_formatters(path1, path2, formatter, path_to_result):
         path1,
         path2,
         formatter,
-    ) == open_result_file(path_to_result)
+    ) == open_file(path_to_result)
 
 
-def open_result_file(path_to_result):
+def open_file(path_to_result):
     with open(path_to_result) as file_result:
         result = file_result.read()
     return result

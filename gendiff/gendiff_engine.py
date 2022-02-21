@@ -1,12 +1,8 @@
 """This is the difference logic."""
-from gendiff.formatters.format_json import get_json
-from gendiff.formatters.format_plain import get_plain
-from gendiff.formatters.format_stylish import get_stylish
+from gendiff.formatters.get_format import select_formatter
 from gendiff.parser_file import parse_file
 from gendiff.diff_tree import build_diff_tree
 from gendiff.constants import (
-    JSON,
-    PLAIN,
     STYLISH,
 )
 
@@ -25,16 +21,3 @@ def generate_diff(file_path1, file_path2, formatter_name=STYLISH):
     return select_formatter(formatter_name)(
         build_diff_tree(content_one, content_two),
     )
-
-
-def select_formatter(format_name):
-    """Select formatter for output format.
-    Returns:
-        output format
-    """
-    formatters = {
-        STYLISH: get_stylish,
-        PLAIN: get_plain,
-        JSON: get_json,
-    }
-    return formatters[format_name]

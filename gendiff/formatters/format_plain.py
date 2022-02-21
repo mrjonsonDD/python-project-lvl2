@@ -17,22 +17,23 @@ def get_plain(diff_structure):
     Returns:
         result string.
     """
-    result_string = []
-    return '\n'.join(for_plain(diff_structure, '', result_string))
+    tabs = ''
+    return '\n'.join(for_plain(diff_structure, tabs))
 
 
-def for_plain(diff, path_prefix, string):  # noqa: C901
+def for_plain(diff, path_prefix):  # noqa: C901
+    str_list = []
     for key in sorted(diff.keys()):
         path = get_path(path_prefix, key)
         if diff[key].get(TYPE) == ADDED:
-            string.append("Property '{0}' was added with value: {1}".format(
+            str_list.append("Property '{0}' was added with value: {1}".format(
                 path,
                 converting_plain(diff[key][VALUE]),
             ))
         elif diff[key].get(TYPE) == DELETED:
-            string.append("Property '{0}' was removed".format(path))
+            str_list.append("Property '{0}' was removed".format(path))
         elif diff[key].get(TYPE) == CHANGED:
-            string.append("Property '{0}' was updated. From {1} to {2}".format(
+            str_list.append("Property '{0}' was updated. From {1} to {2}".format(
                 path,
                 converting_plain(diff[key][VALUE][DELETED]),
                 converting_plain(diff[key][VALUE][ADDED]),
@@ -40,8 +41,8 @@ def for_plain(diff, path_prefix, string):  # noqa: C901
         elif diff[key].get(TYPE) == UNCHANGED:
             continue
         elif diff[key].get(TYPE) == NESTED:
-            string += for_plain(diff[key][VALUE], path + '.', [])
-    return string
+            str_list += for_plain(diff[key][VALUE], path + '.')
+    return str_list
 
 
 def converting_plain(value):
