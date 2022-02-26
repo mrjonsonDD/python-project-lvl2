@@ -1,44 +1,40 @@
+#!/usr/bin/env python3
+from gendiff.parser_file import prepare_file
+from gendiff.formatters.get_format import select_formatter
 from gendiff.constants import (
     ADDED,
     CHANGED,
-    TYPE,
     DELETED,
     NESTED,
     UNCHANGED,
-    VALUE,
 )
 
 
-def build_diff_tree(first_dict, second_dict):
-    """Get difference tree betweet two file.
-    Args:
-        first_dict (string): Dict from the first file.
-        second_dict (string): Dict from the second file.
-    Returns:
-        difference dict.
-    """
-    diff_diff = {}
-    shared_keys = (first_dict.keys() & second_dict.keys())
-    deleted_keys = (first_dict.keys() - second_dict.keys())
-    added_keys = (second_dict.keys() - first_dict.keys())
+def build_diff_tree(path_file1, path_file2, output_format='stylish'):
+    old_file = prepare_file(path_file1)
+    new_file = prepare_file(path_file2)
+    diff = create_diff(old_file, new_file)
+    return select_formatter(diff, output_format)
+
+
+def create_diff(old_file, new_file):
+    diff = {}
+    added_keys = new_file.keys() - old_file.keys()
+    deleted_keys = old_file.keys() - new_file.keys()
+    intersection_keys = old_file.keys() & new_file.keys()
+    for key in added_keys:
+        diff[key] = [ADDED, new_file.get(key)]
     for key in deleted_keys:
-        diff_diff[key] = {TYPE: DELETED, VALUE: first_dict[key]}
-    for key2 in shared_keys:
-        if first_dict.get(key2) == second_dict.get(key2):
-            diff_diff[key2] = {TYPE: UNCHANGED, VALUE: first_dict[key2]}
-        elif isinstance(second_dict.get(key2), dict) and isinstance(first_dict.get(key2), dict):  # noqa:E501
-            diff_diff[key2] = {
-                TYPE: NESTED,
-                VALUE: build_diff_tree(first_dict[key2], second_dict[key2]),
-            }
-        else:
-            diff_diff[key2] = {
-                TYPE: CHANGED,
-                VALUE: {
-                    DELETED: first_dict[key2],
-                    ADDED: second_dict[key2],
-                },
-            }
-    for key3 in added_keys:
-        diff_diff[key3] = {TYPE: ADDED, VALUE: second_dict[key3]}
-    return diff_diff
+        diff[key] = [DELETED, old_file.get(key)]
+    for key in intersection_keys:
+        diff[key] = create_intersection_diff(
+            old_file.get(key), new_file.get(key))
+    return diff
+
+
+def create_intersection_diff(old_value, new_value):
+    if isinstance(old_value, dict) and isinstance(new_value, dict):
+        return [NESTED, create_diff(old_value, new_value)]
+    if old_value == new_value:
+        return [UNCHANGED, old_value]
+    return [CHANGED, old_value, new_value]

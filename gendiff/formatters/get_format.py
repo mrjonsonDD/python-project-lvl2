@@ -1,21 +1,15 @@
-from gendiff.formatters.format_json import get_json
-from gendiff.formatters.format_plain import get_plain
-from gendiff.formatters.format_stylish import get_stylish
-from gendiff.constants import (
-    JSON,
-    PLAIN,
-    STYLISH,
-)
+from gendiff.formatters.format_stylish import format_stylish
+from gendiff.formatters.format_plain import format_plain
+from gendiff.formatters.format_json import format_json
 
 
-def select_formatter(format_name):
-    """Select formatter for output format.
-    Returns:
-        output format
-    """
-    formatters = {
-        STYLISH: get_stylish,
-        PLAIN: get_plain,
-        JSON: get_json,
-    }
-    return formatters[format_name]
+FORMAT_TYPES = {
+    'stylish': format_stylish,
+    'plain': format_plain,
+    'json': format_json,
+}
+
+
+def select_formatter(diff, style='stylish'):
+    formatter = FORMAT_TYPES.get(style)
+    return formatter(diff)

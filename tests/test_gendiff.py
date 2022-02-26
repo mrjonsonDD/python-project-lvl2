@@ -1,7 +1,7 @@
 """Test generate diff with difference formats."""
 import pytest
 from gendiff.constants import JSON, PLAIN, STYLISH
-from gendiff.gendiff_engine import generate_diff
+from gendiff.diff_tree import build_diff_tree
 
 
 @pytest.mark.parametrize('path1, path2, formatter, path_to_result', [
@@ -27,7 +27,7 @@ from gendiff.gendiff_engine import generate_diff
      JSON, 'tests/fixtures/result_json.txt'),
 ])
 def test_formatters(path1, path2, formatter, path_to_result):
-    assert generate_diff(
+    assert build_diff_tree(
         path1,
         path2,
         formatter,

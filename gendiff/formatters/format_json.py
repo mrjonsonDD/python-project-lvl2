@@ -1,12 +1,16 @@
-"""This is json formatter."""
 import json
 
 
-def get_json(diff_structure):
-    """Convert format_dict to json format.
-    Parameters:
-        diff_structure(format_dict): dict of difference.
-    Returns:
-        result json file.
-    """
-    return json.dumps(diff_structure, indent=2, sort_keys=True)
+def sorted_diff(diff):
+    result = {}
+    sort_list_keys = sorted(diff.keys())
+    for key in sort_list_keys:
+        result[key] = diff[key]
+        if isinstance(diff[key], list):
+            if isinstance(diff[key][1], dict):
+                result[key][1] = sorted_diff(diff[key][1])
+    return result
+
+
+def format_json(diff):
+    return json.dumps(sorted_diff(diff), indent=2)

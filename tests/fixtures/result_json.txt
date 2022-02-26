@@ -1,100 +1,92 @@
 {
-  "common": {
-    "type": "nested",
-    "value": {
-      "follow": {
-        "type": "added",
-        "value": false
-      },
-      "setting1": {
-        "type": "unchanged",
-        "value": "Value 1"
-      },
-      "setting2": {
-        "type": "deleted",
-        "value": 200
-      },
-      "setting3": {
-        "type": "changed",
-        "value": {
-          "added": null,
-          "deleted": true
-        }
-      },
-      "setting4": {
-        "type": "added",
-        "value": "blah blah"
-      },
-      "setting5": {
-        "type": "added",
-        "value": {
+  "common": [
+    "nested",
+    {
+      "follow": [
+        "added",
+        false
+      ],
+      "setting1": [
+        "unchanged",
+        "Value 1"
+      ],
+      "setting2": [
+        "deleted",
+        200
+      ],
+      "setting3": [
+        "changed",
+        true,
+        null
+      ],
+      "setting4": [
+        "added",
+        "blah blah"
+      ],
+      "setting5": [
+        "added",
+        {
           "key5": "value5"
         }
-      },
-      "setting6": {
-        "type": "nested",
-        "value": {
-          "doge": {
-            "type": "nested",
-            "value": {
-              "wow": {
-                "type": "changed",
-                "value": {
-                  "added": "so much",
-                  "deleted": ""
-                }
-              }
+      ],
+      "setting6": [
+        "nested",
+        {
+          "doge": [
+            "nested",
+            {
+              "wow": [
+                "changed",
+                "",
+                "so much"
+              ]
             }
-          },
-          "key": {
-            "type": "unchanged",
-            "value": "value"
-          },
-          "ops": {
-            "type": "added",
-            "value": "vops"
-          }
+          ],
+          "key": [
+            "unchanged",
+            "value"
+          ],
+          "ops": [
+            "added",
+            "vops"
+          ]
         }
-      }
+      ]
     }
-  },
-  "group1": {
-    "type": "nested",
-    "value": {
-      "baz": {
-        "type": "changed",
-        "value": {
-          "added": "bars",
-          "deleted": "bas"
-        }
-      },
-      "foo": {
-        "type": "unchanged",
-        "value": "bar"
-      },
-      "nest": {
-        "type": "changed",
-        "value": {
-          "added": "str",
-          "deleted": {
-            "key": "value"
-          }
-        }
-      }
+  ],
+  "group1": [
+    "nested",
+    {
+      "baz": [
+        "changed",
+        "bas",
+        "bars"
+      ],
+      "foo": [
+        "unchanged",
+        "bar"
+      ],
+      "nest": [
+        "changed",
+        {
+          "key": "value"
+        },
+        "str"
+      ]
     }
-  },
-  "group2": {
-    "type": "deleted",
-    "value": {
+  ],
+  "group2": [
+    "deleted",
+    {
       "abc": 12345,
       "deep": {
         "id": 45
       }
     }
-  },
-  "group3": {
-    "type": "added",
-    "value": {
+  ],
+  "group3": [
+    "added",
+    {
       "deep": {
         "id": {
           "number": 45
@@ -102,5 +94,5 @@
       },
       "fee": 100500
     }
-  }
+  ]
 }

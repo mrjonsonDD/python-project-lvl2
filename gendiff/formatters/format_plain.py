@@ -1,68 +1,45 @@
-"""This is string formatter."""
-from gendiff.constants import (  # noqa: WPS235
+from gendiff.constants import (
     ADDED,
     CHANGED,
-    TYPE,
     DELETED,
     NESTED,
-    UNCHANGED,
-    VALUE,
 )
 
-
-PROPETTY_ADDED = "Property '{0}' was added with value: {1}"
-PROPETTY_REMOVED = "Property '{0}' was removed"
-PROPETTY_UPDATED = "Property '{0}' was updated. From {1} to {2}"
-
-
-def get_plain(diff_structure):
-    """Convert format_dict to plain format.
-    Parameters:
-        diff_structure(dict): dict of difference.
-    Returns:
-        result string.
-    """
-    tabs = ''
-    return '\n'.join(for_plain(diff_structure, tabs))
+ADDED_STR = "Property '{0}' was added with value: {1}"
+DELETED_STR = "Property '{0}' was removed"
+CHANGED_STR = "Property '{0}' was updated. From {1} to {2}"
 
 
-def for_plain(diff, path_prefix):  # noqa: C901
-    str_list = []
-    for key in sorted(diff.keys()):
-        path = get_path(path_prefix, key)
-        if diff[key].get(TYPE) == ADDED:
-            str_list.append(PROPETTY_ADDED.format(
-                path,
-                converting_plain(diff[key][VALUE]),
-            ))
-        elif diff[key].get(TYPE) == DELETED:
-            str_list.append(PROPETTY_REMOVED.format(path))
-        elif diff[key].get(TYPE) == CHANGED:
-            str_list.append(PROPETTY_UPDATED.format(
-                path,
-                converting_plain(diff[key][VALUE][DELETED]),
-                converting_plain(diff[key][VALUE][ADDED]),
-            ))
-        elif diff[key].get(TYPE) == UNCHANGED:
-            continue
-        elif diff[key].get(TYPE) == NESTED:
-            str_list += for_plain(diff[key][VALUE], path + '.')
-    return str_list
+def format_plain(diff, key_path=[]):  # noqa: C901
+    res = []
+    for diff_key, diff_value in sorted(diff.items()):
+        key_path.append(diff_key)
+        status, rest = diff_value[0], diff_value[1:]
+        value = rest[0]
+        formatted_value = format_value(value)
+        if status == CHANGED:
+            updated_value = rest[1]
+            formatted_updated_value = format_value(updated_value)
+            res.append(CHANGED_STR.format(
+                '.'.join(key_path), formatted_value, formatted_updated_value))
+        if status == ADDED:
+            res.append(ADDED_STR.format(
+                '.'.join(key_path), formatted_value))
+        if status == DELETED:
+            res.append(DELETED_STR.format('.'.join(key_path)))
+        if status == NESTED:
+            res.append(format_plain(value, key_path))
+        key_path.pop()
+    return '\n'.join(res)
 
 
-def converting_plain(value):
-    if isinstance(value, bool):
-        value = (str(value)).lower()
+def format_value(value):
+    if type(value) in (list, dict):
+        value = '[complex value]'
+    elif isinstance(value, bool):
+        value = str(value).lower()
     elif value is None:
         value = 'null'
-    elif isinstance(value, (dict, list)):
-        value = '[complex value]'
     elif isinstance(value, str):
-        value = "'{0}'".format(value)
+        value = f"'{value}'"
     return value
-
-
-def get_path(path, key):
-    if path == key:
-        return path
-    return path + key

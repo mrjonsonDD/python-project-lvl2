@@ -1,12 +1,8 @@
-"""This is constants file."""
-DELETED = 'deleted'
 ADDED = 'added'
-UNCHANGED = 'unchanged'
 CHANGED = 'changed'
+DELETED = 'deleted'
 NESTED = 'nested'
-TYPE = 'type'
-VALUE = 'value'
-# Formatters const
+UNCHANGED = 'unchanged'
 STYLISH = 'stylish'
 PLAIN = 'plain'
 JSON = 'json'
