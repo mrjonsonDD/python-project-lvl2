@@ -1,5 +1,4 @@
 """Test help function for gendiff."""
-from gendiff.constants import ADDED, DELETED, UNCHANGED
 from gendiff.formatters.format_plain import format_value
 from gendiff.formatters.format_stylish import format_value
 

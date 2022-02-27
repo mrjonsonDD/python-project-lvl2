@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-from gendiff.diff_tree import build_diff_tree
-from gendiff.gendiff_engine import generate_diff
+from gendiff.diff_tree import generate_diff
+from gendiff.gendiff_engine import cli_parser
 
 
 def main():
-    arguments = generate_diff()
-    diff = build_diff_tree(
+    arguments = cli_parser()
+    diff = generate_diff(
         arguments.first_file, arguments.second_file, arguments.format)
     print(diff)
 

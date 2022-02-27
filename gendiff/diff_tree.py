@@ -10,14 +10,14 @@ from gendiff.constants import (
 )
 
 
-def build_diff_tree(path_file1, path_file2, output_format='stylish'):
+def generate_diff(path_file1, path_file2, output_format='stylish'):
     old_file = prepare_file(path_file1)
     new_file = prepare_file(path_file2)
-    diff = create_diff(old_file, new_file)
+    diff = build_diff_tree(old_file, new_file)
     return select_formatter(diff, output_format)
 
 
-def create_diff(old_file, new_file):
+def build_diff_tree(old_file, new_file):
     diff = {}
     added_keys = new_file.keys() - old_file.keys()
     deleted_keys = old_file.keys() - new_file.keys()
@@ -34,7 +34,7 @@ def create_diff(old_file, new_file):
 
 def create_intersection_diff(old_value, new_value):
     if isinstance(old_value, dict) and isinstance(new_value, dict):
-        return [NESTED, create_diff(old_value, new_value)]
+        return [NESTED, build_diff_tree(old_value, new_value)]
     if old_value == new_value:
         return [UNCHANGED, old_value]
     return [CHANGED, old_value, new_value]
