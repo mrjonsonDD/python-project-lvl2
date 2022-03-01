@@ -16,10 +16,10 @@ def format_plain(diff, key_path=[]):  # noqa: C901
         key_path.append(diff_key)
         status, rest = diff_value[0], diff_value[1:]
         value = rest[0]
-        formatted_value = format_value(value)
+        formatted_value = format_val(value)
         if status == CHANGED:
             updated_value = rest[1]
-            formatted_updated_value = format_value(updated_value)
+            formatted_updated_value = format_val(updated_value)
             res.append(CHANGED_STR.format(
                 '.'.join(key_path), formatted_value, formatted_updated_value))
         if status == ADDED:
@@ -33,7 +33,7 @@ def format_plain(diff, key_path=[]):  # noqa: C901
     return '\n'.join(res)
 
 
-def format_value(value):
+def format_val(value):
     if type(value) in (list, dict):
         value = '[complex value]'
     elif isinstance(value, bool):
