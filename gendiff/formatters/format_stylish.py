@@ -42,6 +42,7 @@ def forming_string(flag, key, value, level):
         return f'{indent}{flags[flag]} {key}: {result}'
     return f'{indent}{flags[flag]} {key}: {format_value(value)}'
 
+
 def format_value(value):
     if isinstance(value, bool):
         return str(value).lower()
