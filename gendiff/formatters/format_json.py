@@ -12,5 +12,5 @@ def sorted_diff(diff):
     return result
 
 
-def format_json(diff):
+def to_json(diff):
     return json.dumps(sorted_diff(diff), indent=2)

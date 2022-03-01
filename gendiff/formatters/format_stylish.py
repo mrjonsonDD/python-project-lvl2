@@ -7,39 +7,40 @@ from gendiff.constants import (
 )
 
 DEFAULT_INDENT = 4
-STATUS_INDENT = 2
-STATUSES = {
-    ADDED: '+',
-    DELETED: '-',
-    UNCHANGED: ' ',
-    NESTED: ' ',
-}
+FLAG_INDENT = 2
 
 
-def format_stylish(diff, depth=0):  # noqa: C901
-    indent = depth * DEFAULT_INDENT * ' '
-    next_depth = depth + 1
-    res = []
-    for key, value in sorted(diff.items()):
+def to_stylish(difference, level=0):  # noqa: C901
+    indent = level * DEFAULT_INDENT * ' '
+    diff = []
+    for key, value in sorted(difference.items()):
         if isinstance(value, list):
-            status, *rest = value
-            if status == CHANGED:
-                res.append(generate_string(DELETED, key, rest[0], next_depth))
-                res.append(generate_string(ADDED, key, rest[1], next_depth))
-                continue
-            res.append(generate_string(status, key, rest[0], next_depth))
-            continue
-        res.append(generate_string(UNCHANGED, key, value, next_depth))
-    return '{\n' + '\n'.join(res) + '\n' + indent + '}'
+            flag, *rest = value
+            if flag == UNCHANGED or flag == NESTED:
+                diff.append(forming_string(UNCHANGED, key, rest[0], level + 1))
+            if flag == CHANGED:
+                diff.append(forming_string(DELETED, key, rest[0], level + 1))
+                diff.append(forming_string(ADDED, key, rest[1], level + 1))
+            if flag == DELETED:
+                diff.append(forming_string(DELETED, key, rest[0], level + 1))
+            if flag == ADDED:
+                diff.append(forming_string(ADDED, key, rest[0], level + 1))
+        else:
+            diff.append(forming_string(UNCHANGED, key, value, level + 1))
+    return '{\n' + '\n'.join(diff) + '\n' + indent + '}'
 
 
-def generate_string(status, key, value, depth):
-    indent = (depth * DEFAULT_INDENT - STATUS_INDENT) * ' '
+def forming_string(flag, key, value, level):
+    flags = {
+        ADDED: '+',
+        DELETED: '-',
+        UNCHANGED: ' '
+    }
+    indent = (level * DEFAULT_INDENT - FLAG_INDENT) * ' '
     if isinstance(value, dict):
-        result = format_stylish(value, depth)
-        return f'{indent}{STATUSES[status]} {key}: {result}'
-    return f'{indent}{STATUSES[status]} {key}: {format_value(value)}'
-
+        result = to_stylish(value, level)
+        return f'{indent}{flags[flag]} {key}: {result}'
+    return f'{indent}{flags[flag]} {key}: {format_value(value)}'
 
 def format_value(value):
     if isinstance(value, bool):
