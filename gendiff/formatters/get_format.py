@@ -1,12 +1,10 @@
-from gendiff.formatters.format_stylish import to_stylish
-from gendiff.formatters.format_plain import to_plain
-from gendiff.formatters.format_json import to_json
+from gendiff.formatters import format_stylish, format_plain, format_json
 
 
 FORMAT_TYPES = {
-    'stylish': to_stylish,
-    'plain': to_plain,
-    'json': to_json,
+    'stylish': format_stylish.to_slylish,
+    'plain': format_plain.to_plain,
+    'json': format_json.to_json,
 }
 
 

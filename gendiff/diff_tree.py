@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
+from collections import OrderedDict
 from gendiff.parser_file import prepare_file
 from gendiff.formatters.get_format import select_formatter
 from gendiff.constants import (
     ADDED,
-    CHANGED,
-    DELETED,
-    NESTED,
+    UPDATED,
+    REMOVED,
     UNCHANGED,
+    DICT,
+    TYPE,
+    VALUE,
+    OLD_VAL,
+    NEW_VAL,
+    CHILDREN
 )
 
 
@@ -18,23 +24,44 @@ def generate_diff(path_file1, path_file2, output_format='stylish'):
 
 
 def build_diff_tree(old_file, new_file):
-    diff = {}
-    added_keys = new_file.keys() - old_file.keys()
-    deleted_keys = old_file.keys() - new_file.keys()
-    intersection_keys = old_file.keys() & new_file.keys()
-    for key in added_keys:
-        diff[key] = [ADDED, new_file.get(key)]
-    for key in deleted_keys:
-        diff[key] = [DELETED, old_file.get(key)]
-    for key in intersection_keys:
-        diff[key] = create_intersection_diff(
-            old_file.get(key), new_file.get(key))
-    return diff
+    result = {}
+    set1 = set(old_file)
+    set2 = set(new_file)
+    com_keys = set1 & set2
+    add_keys = set2 - set1
+    dell_keys = set1 - set2
+    for add_key in add_keys:
+        result[add_key] = {
+            TYPE: ADDED,
+            VALUE: new_file.get(add_key)
+        }
 
+    for dell_key in dell_keys:
+        result[dell_key] = {
+            TYPE: REMOVED,
+            VALUE: old_file.get(dell_key)
+        }
 
-def create_intersection_diff(old_value, new_value):
-    if isinstance(old_value, dict) and isinstance(new_value, dict):
-        return [NESTED, build_diff_tree(old_value, new_value)]
-    if old_value == new_value:
-        return [UNCHANGED, old_value]
-    return [CHANGED, old_value, new_value]
+    for com_key in com_keys:
+        elem1 = old_file.get(com_key)
+        elem2 = new_file.get(com_key)
+        if elem1 == elem2:
+            result[com_key] = {
+                TYPE: UNCHANGED,
+                VALUE: elem1
+            }
+        else:
+            if isinstance(elem1, dict) and isinstance(elem2, dict):
+                result[com_key] = {
+                    TYPE: DICT,
+                    CHILDREN: build_diff_tree(elem1, elem2)
+                }
+            else:
+                result[com_key] = {
+                    TYPE: UPDATED,
+                    OLD_VAL: elem1,
+                    NEW_VAL: elem2
+                }
+
+    sorted_result = OrderedDict(sorted(result.items(), key=lambda k: k))
+    return sorted_result

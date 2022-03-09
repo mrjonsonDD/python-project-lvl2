@@ -1,47 +1,75 @@
 from gendiff.constants import (
     ADDED,
-    CHANGED,
-    DELETED,
-    NESTED,
+    UPDATED,
+    REMOVED,
+    UNCHANGED,
+    DICT,
+    TYPE,
+    VALUE,
+    OLD_VAL,
+    NEW_VAL,
+    CHILDREN
 )
 
-ADDED_STR = "Property '{0}' was added with value: {1}"
-DELETED_STR = "Property '{0}' was removed"
-CHANGED_STR = "Property '{0}' was updated. From {1} to {2}"
+# flake8: noqa: C901
+def to_plain(diff):
 
+    def stringify(item, parent_key=''):
+        current_key, item_value = item
+        item_type = item_value.get(TYPE)
+        if parent_key:
+            key = f"{parent_key}.{current_key}"
+        else:
+            key = current_key
 
-def to_plain(diff, key_path=None):  # noqa: C901
-    res = []
-    if not key_path:
-        key_path = []
-    for diff_key, diff_value in sorted(diff.items()):
-        key_path.append(diff_key)
-        status, rest = diff_value[0], diff_value[1:]
-        value = rest[0]
-        formatted_value = format_val(value)
-        if status == CHANGED:
-            updated_value = rest[1]
-            formatted_updated_value = format_val(updated_value)
-            res.append(CHANGED_STR.format(
-                '.'.join(key_path), formatted_value, formatted_updated_value))
-        if status == ADDED:
-            res.append(ADDED_STR.format(
-                '.'.join(key_path), formatted_value))
-        if status == DELETED:
-            res.append(DELETED_STR.format('.'.join(key_path)))
-        if status == NESTED:
-            res.append(to_plain(value, key_path))
-        key_path.pop()
-    return '\n'.join(res)
+        if item_type == DICT:
+            children = item_value.get(CHILDREN)
+            new_lines = [stringify(child, key) 
+                for child in list(children.items())
+                if child[1].get(TYPE) != UNCHANGED]
+            child_str = '\n'.join(new_lines)
+            return child_str
+        
+        if item_type == UPDATED:
+            value1 = item_value.get(OLD_VAL)
+            value2 = item_value.get(NEW_VAL)
+            val1 = format_val(value1)
+            val2 = format_val(value2)
+            item_str = f"Property '{key}' was updated. From {val1} to {val2}"
+            return item_str
+
+        if item_type == REMOVED:
+            item_str = f"Property '{key}' was removed"
+            return item_str
+
+        if item_type == ADDED:
+            value = item_value.get(VALUE)
+            val = format_val(value)
+            item_str = f"Property '{key}' was added with value: {val}"
+            return item_str
+
+    result = ''
+    if diff:
+        lines = [stringify(elem) 
+            for elem in list(diff.items())
+            if elem[1].get(TYPE) != UNCHANGED]
+        result = '\n'.join(lines)
+    return result
 
 
 def format_val(value):
-    if type(value) in (list, dict):
-        value = '[complex value]'
-    elif isinstance(value, bool):
-        value = str(value).lower()
-    elif value is None:
-        value = 'null'
+    """Function stringifies value if it is a dict"""
+    replace_dict = {
+        None: 'null',
+        True: 'true',
+        False: 'false'
+    }
+    if isinstance(value, dict):
+        return '[complex value]'
     elif isinstance(value, str):
-        value = f"'{value}'"
-    return value
+        return f"'{value}'"
+    else:
+        if value in replace_dict.keys() and type(value) is not int:
+            return replace_dict[value]
+        else:
+            return value
