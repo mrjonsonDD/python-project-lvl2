@@ -8,6 +8,11 @@ from gendiff.constants import (
 
 DEFAULT_INDENT = 4
 FLAG_INDENT = 2
+flags = {
+        ADDED: '+',
+        DELETED: '-',
+        UNCHANGED: ' '
+    }
 
 
 def to_stylish(difference, level=0):  # noqa: C901
@@ -17,25 +22,32 @@ def to_stylish(difference, level=0):  # noqa: C901
         if isinstance(value, list):
             flag, *rest = value
             if flag == UNCHANGED or flag == NESTED:
-                diff.append(forming_string(UNCHANGED, key, rest[0], level + 1))
+                updated_val = rest[0]
+                format_val = forming_str(UNCHANGED, key, updated_val, level + 1)
+                diff.append(format_val)
             if flag == CHANGED:
-                diff.append(forming_string(DELETED, key, rest[0], level + 1))
-                diff.append(forming_string(ADDED, key, rest[1], level + 1))
+                updated_val = rest[0]
+                format_val = forming_str(DELETED, key, updated_val, level + 1)
+                diff.append(format_val)
+                updated_val = rest[1]
+                format_val = forming_str(ADDED, key, updated_val, level + 1)
+                diff.append(format_val)
             if flag == DELETED:
-                diff.append(forming_string(DELETED, key, rest[0], level + 1))
+                updated_val = rest[0]
+                format_val = forming_str(DELETED, key, updated_val, level + 1)
+                diff.append(format_val)
             if flag == ADDED:
-                diff.append(forming_string(ADDED, key, rest[0], level + 1))
+                updated_val = rest[0]
+                format_val = forming_str(ADDED, key, updated_val, level + 1)
+                diff.append(format_val)
         else:
-            diff.append(forming_string(UNCHANGED, key, value, level + 1))
+            updated_val = value
+            format_val = forming_str(UNCHANGED, key, updated_val, level + 1)
+            diff.append(format_val)
     return '{\n' + '\n'.join(diff) + '\n' + indent + '}'
 
 
-def forming_string(flag, key, value, level):
-    flags = {
-        ADDED: '+',
-        DELETED: '-',
-        UNCHANGED: ' '
-    }
+def forming_str(flag, key, value, level):
     indent = (level * DEFAULT_INDENT - FLAG_INDENT) * ' '
     if isinstance(value, dict):
         result = to_stylish(value, level)
