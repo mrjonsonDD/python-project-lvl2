@@ -9,10 +9,10 @@ from gendiff.constants import (
 DEFAULT_INDENT = 4
 FLAG_INDENT = 2
 flags = {
-        ADDED: '+',
-        DELETED: '-',
-        UNCHANGED: ' '
-    }
+    ADDED: '+',
+    DELETED: '-',
+    UNCHANGED: ' '
+}
 
 
 def to_stylish(difference, level=0):  # noqa: C901
