@@ -6,6 +6,7 @@ JSON = 'json'
 PLAIN = 'plain'
 STYLISH = 'stylish'
 
+
 @pytest.mark.parametrize('path1, path2, formatter, path_to_result', [
     ('tests/fixtures/file1.json', 'tests/fixtures/file2.json',
      STYLISH, 'tests/fixtures/result_simple.txt'),
