@@ -4,7 +4,7 @@ from gendiff.constants import (
     UPDATED,
     REMOVED,
     UNCHANGED,
-    DICT,
+    NESTED,
     TYPE,
     VALUE,
     OLD_VAL,
@@ -30,7 +30,7 @@ def to_slylish(diff):
         deep_indent = replacer * deep_indent_size
         item_str = ''
 
-        if item_type == DICT:
+        if item_type == NESTED:
             children = item_value.get(CHILDREN)
             indent = replacer * (depth + 2)
             new_lines = [

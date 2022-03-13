@@ -3,7 +3,7 @@ from gendiff.constants import (
     UPDATED,
     REMOVED,
     UNCHANGED,
-    DICT,
+    NESTED,
     TYPE,
     VALUE,
     OLD_VAL,
@@ -22,7 +22,7 @@ def to_plain(diff):
         else:
             key = current_key
 
-        if item_type == DICT:
+        if item_type == NESTED:
             children = item_value.get(CHILDREN)
             new_lines = [stringify(child, key) 
                 for child in list(children.items())

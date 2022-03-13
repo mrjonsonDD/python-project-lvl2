@@ -7,7 +7,7 @@ from gendiff.constants import (
     UPDATED,
     REMOVED,
     UNCHANGED,
-    DICT,
+    NESTED,
     TYPE,
     VALUE,
     OLD_VAL,
@@ -53,7 +53,7 @@ def build_diff_tree(old_file, new_file):
         else:
             if isinstance(elem1, dict) and isinstance(elem2, dict):
                 result[com_key] = {
-                    TYPE: DICT,
+                    TYPE: NESTED,
                     CHILDREN: build_diff_tree(elem1, elem2)
                 }
             else:
