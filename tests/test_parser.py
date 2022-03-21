@@ -1,6 +1,6 @@
 import pytest
 
-from gendiff.parser_file import prepare_file
+from gendiff.diff_tree import prepare_file
 
 
 @pytest.mark.parametrize(

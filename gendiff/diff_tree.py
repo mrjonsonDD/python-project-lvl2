@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
+from gendiff.file_reader import get_format, get_content
 from collections import OrderedDict
-from gendiff.parser_file import prepare_file
+from gendiff.parser_file import parser
 from gendiff.formatters.get_format import select_formatter
 from gendiff.constants import (
     ADDED,
@@ -15,36 +16,41 @@ from gendiff.constants import (
     CHILDREN
 )
 
+def prepare_file(file_path):
+    file_format = get_format(file_path)
+    data = get_content(file_path)
+    return parser(file_format)(data)
 
-def generate_diff(path_file1, path_file2, output_format='stylish'):
-    old_file = prepare_file(path_file1)
-    new_file = prepare_file(path_file2)
-    diff = build_diff_tree(old_file, new_file)
+
+def generate_diff(data1, data2, output_format='stylish'):
+    dict1 = prepare_file(data1)
+    dict2 = prepare_file(data2)
+    diff = build_diff_tree(dict1, dict2)
     return select_formatter(diff, output_format)
 
 
-def build_diff_tree(old_file, new_file):
+def build_diff_tree(dict1, dict2):
     result = {}
-    set1 = set(old_file)
-    set2 = set(new_file)
+    set1 = set(dict1)
+    set2 = set(dict2)
     com_keys = set1 & set2
     add_keys = set2 - set1
     dell_keys = set1 - set2
     for add_key in add_keys:
         result[add_key] = {
             TYPE: ADDED,
-            VALUE: new_file.get(add_key)
+            VALUE: dict2.get(add_key)
         }
 
     for dell_key in dell_keys:
         result[dell_key] = {
             TYPE: REMOVED,
-            VALUE: old_file.get(dell_key)
+            VALUE: dict1.get(dell_key)
         }
 
     for com_key in com_keys:
-        elem1 = old_file.get(com_key)
-        elem2 = new_file.get(com_key)
+        elem1 = dict1.get(com_key)
+        elem2 = dict2.get(com_key)
         if elem1 == elem2:
             result[com_key] = {
                 TYPE: UNCHANGED,

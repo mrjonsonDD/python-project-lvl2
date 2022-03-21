@@ -6,7 +6,7 @@ def get_format(file_path):
     return file_format
 
 
-def open_file(file_path):
+def get_content(file_path):
     with open(os.path.abspath(file_path)) as f:
         file = f.read()
     return file
