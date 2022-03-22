@@ -16,6 +16,7 @@ from gendiff.constants import (
     CHILDREN
 )
 
+
 def prepare_file(file_path):
     file_format = get_format(file_path)
     data = get_content(file_path)
