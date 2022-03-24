@@ -23,13 +23,17 @@ The gendiff program finds differences in files and outputs them in 3 formats (JS
 Running (Вызов):
 gendiff --format path/to/file1 path/to/file2
 
- If you need help use the flag: 
- Есть возможность вызвать справку используя флаг:
+If you need help use the flag: 
+ 
+Есть возможность вызвать справку используя флаг:
+ 
 gendiff -h
 
+ 
 Default output format 'stylish', it is also possible to select the output format 'plain' и 'json' use the flag:
  
 Формат вывода по умолчанию 'stylish', так же возможно выбрать формат вывода 'plain' и 'json' с помощью флага:
+ 
 gendiff --format plain
  
  
