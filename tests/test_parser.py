@@ -1,6 +1,6 @@
 import pytest
 
-from gendiff.diff_tree import prepare_file
+from gendiff.diff_tree import prepare_content
 
 
 @pytest.mark.parametrize(
@@ -14,4 +14,4 @@ from gendiff.diff_tree import prepare_file
 )
 def test_wrong_file(file_path):
     with pytest.raises(Exception):
-        assert prepare_file(file_path)
+        assert prepare_content(file_path)

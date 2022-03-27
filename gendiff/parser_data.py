@@ -8,15 +8,15 @@ YAML_ERROR_MSG = '{0} - incorrect YAML file'
 JSON_ERROR_MSG = '{0} - incorrect JSON file'
 
 
-def parser(file_format):
+def parser(data_format):
     format = {
         '.json': json.loads,
         '.yaml': yaml.safe_load,
         '.yml': yaml.safe_load
     }
     try:
-        return format[file_format.lower()]
+        return format[data_format.lower()]
     except ScannerError:
-        raise YAML_ERROR_MSG.format(file_format)
+        raise YAML_ERROR_MSG.format(data_format)
     except JSONDecodeError:
-        raise JSON_ERROR_MSG.format(file_format)
+        raise JSON_ERROR_MSG.format(data_format)

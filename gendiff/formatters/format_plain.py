@@ -1,3 +1,4 @@
+import json
 from gendiff.constants import (
     ADDED,
     UPDATED,
@@ -14,16 +15,26 @@ from gendiff.constants import (
 # flake8: noqa: C901
 def to_plain(diff):
     result = ''
+    items_diff = diff.items()
     if diff:
-        lines = [stringify(elem) 
-            for elem in list(diff.items())
-            if elem[1].get(TYPE) != UNCHANGED]
-        result = '\n'.join(lines)
+        result = get_value(items_diff, indent='')
     return result
+    
+    
+def get_value(items, indent):
+    lines = []
+    for elem in items:
+        item_key, item_value = elem
+        if item_value.get(TYPE) != UNCHANGED:
+            lines.append(stringify_value(elem, indent))
+    result = '\n'.join(lines)
+    return result
+            
+    
+def stringify_value(item, parent_key=''):
 
-
-def stringify(item, parent_key=''):
     current_key, item_value = item
+
     item_type = item_value.get(TYPE)
     if parent_key:
         key = f"{parent_key}.{current_key}"
@@ -32,11 +43,8 @@ def stringify(item, parent_key=''):
 
     if item_type == NESTED:
         children = item_value.get(CHILDREN)
-        new_lines = [stringify(child, key) 
-            for child in list(children.items())
-            if child[1].get(TYPE) != UNCHANGED]
-        child_str = '\n'.join(new_lines)
-        return child_str
+        items_children = children.items()
+        return get_value(items_children, key)     
         
     if item_type == UPDATED:
         value1 = item_value.get(OLD_VAL)
@@ -59,17 +67,12 @@ def stringify(item, parent_key=''):
 
 def format_val(value):
     """Function stringifies value if it is a dict"""
-    replace_dict = {
-        None: 'null',
-        True: 'true',
-        False: 'false'
-    }
     if isinstance(value, dict):
         return '[complex value]'
     elif isinstance(value, str):
         return f"'{value}'"
     else:
-        if value in replace_dict.keys() and type(value) is not int:
-            return replace_dict[value]
+        if value is None or isinstance(value, bool):
+            return json.dumps(value)
         else:
             return value

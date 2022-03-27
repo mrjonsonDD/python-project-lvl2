@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from gendiff.file_reader import get_format, get_content
-from collections import OrderedDict
-from gendiff.parser_file import parser
+from gendiff.parser_data import parser
 from gendiff.formatters.get_format import select_formatter
 from gendiff.constants import (
     ADDED,
@@ -17,15 +16,15 @@ from gendiff.constants import (
 )
 
 
-def prepare_file(file_path):
-    file_format = get_format(file_path)
-    data = get_content(file_path)
-    return parser(file_format)(data)
+def prepare_content(data_path):
+    data_format = get_format(data_path)
+    data = get_content(data_path)
+    return parser(data_format)(data)
 
 
 def generate_diff(data1, data2, output_format='stylish'):
-    dict1 = prepare_file(data1)
-    dict2 = prepare_file(data2)
+    dict1 = prepare_content(data1)
+    dict2 = prepare_content(data2)
     diff = build_diff_tree(dict1, dict2)
     return select_formatter(diff, output_format)
 
@@ -52,23 +51,23 @@ def build_diff_tree(dict1, dict2):
     for com_key in com_keys:
         elem1 = dict1.get(com_key)
         elem2 = dict2.get(com_key)
+        if isinstance(elem1, dict) and isinstance(elem2, dict):
+            result[com_key] = {
+                TYPE: NESTED,
+                CHILDREN: build_diff_tree(elem1, elem2)
+            }
+        else:
+            result[com_key] = {
+                TYPE: UPDATED,
+                OLD_VAL: elem1,
+                NEW_VAL: elem2
+            }
+
         if elem1 == elem2:
             result[com_key] = {
                 TYPE: UNCHANGED,
                 VALUE: elem1
             }
-        else:
-            if isinstance(elem1, dict) and isinstance(elem2, dict):
-                result[com_key] = {
-                    TYPE: NESTED,
-                    CHILDREN: build_diff_tree(elem1, elem2)
-                }
-            else:
-                result[com_key] = {
-                    TYPE: UPDATED,
-                    OLD_VAL: elem1,
-                    NEW_VAL: elem2
-                }
 
-    sorted_result = OrderedDict(sorted(result.items(), key=lambda k: k))
+    sorted_result = dict(sorted(result.items(), key=lambda k: k))
     return sorted_result
