@@ -13,25 +13,21 @@ from gendiff.constants import (
 )
 
 # flake8: noqa: C901
-def to_plain(diff):
+def to_plain(diff, parent_key=''):
     result = ''
     items_diff = diff.items()
     if diff:
-        result = get_value(items_diff, indent='')
-    return result
-    
-    
-def get_value(items, indent):
-    lines = []
-    for elem in items:
+        lines = []
+    for elem in items_diff:
         item_key, item_value = elem
         if item_value.get(TYPE) != UNCHANGED:
-            lines.append(stringify_value(elem, indent))
-    result = '\n'.join(lines)
+            lines.append(stringify_node(elem, parent_key))
+
+        result = '\n'.join(lines)
     return result
             
     
-def stringify_value(item, parent_key=''):
+def stringify_node(item, parent_key=''):
 
     current_key, item_value = item
 
@@ -43,8 +39,8 @@ def stringify_value(item, parent_key=''):
 
     if item_type == NESTED:
         children = item_value.get(CHILDREN)
-        items_children = children.items()
-        return get_value(items_children, key)     
+        items_children = to_plain(children, key)
+        return items_children     
         
     if item_type == UPDATED:
         value1 = item_value.get(OLD_VAL)
