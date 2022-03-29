@@ -85,6 +85,7 @@ def stringify_value(value, level):
     result = itertools.chain("{", lines, [indent +"}"])
     return '\n'.join(result)
 
+
 def get_indent(level):
     indent = level * DEFAULT_INDENT * ' '
     return indent
