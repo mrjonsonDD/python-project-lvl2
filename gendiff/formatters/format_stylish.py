@@ -44,7 +44,7 @@ def stringify_node(item, level=0):
             for child in list(children.items())
         ]
         child_str = '{\n' + '\n'.join(new_lines) + '\n'+ indent + TYPES_TO_INDENTS['nested'] + '}'
-        item_str = f"{indent}    {key}: {child_str} "
+        item_str = f"{indent}    {key}: {child_str}"
         return item_str
 
     if item_type == UPDATED:
@@ -82,7 +82,8 @@ def stringify_value(value, level):
     lines = []
     for key, val in value.items():
         lines.append(f'{indent}    {key}: {stringify_value(val, level+1)}')
-    result = itertools.chain("{", lines, [indent +"}"])
+    result = itertools.chain('{', lines, [indent + '}'])
+    #result = f"{'{'}{[lines]}{indent + '}'}"
     return '\n'.join(result)
 
 
