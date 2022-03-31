@@ -17,6 +17,6 @@ def parser(data_format):
     try:
         return format[data_format.lower()]
     except ScannerError:
-        raise InvalidSyntaxError(YAML_ERROR_MSG.format(data_format))
+        raise ScannerError(YAML_ERROR_MSG.format(data_format))
     except JSONDecodeError:
-        raise InvalidSyntaxError(JSON_ERROR_MSG.format(data_format))
+        raise JSONDecodeError(JSON_ERROR_MSG.format(data_format))
