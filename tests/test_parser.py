@@ -1,6 +1,5 @@
 import pytest
-
-from gendiff.diff_tree import prepare_content
+from gendiff.difference import prepare_content
 
 
 @pytest.mark.parametrize(

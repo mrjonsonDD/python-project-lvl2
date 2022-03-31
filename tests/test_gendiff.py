@@ -1,6 +1,6 @@
 """Test generate diff with difference formats."""
 import pytest
-from gendiff.diff_tree import generate_diff
+from gendiff.difference import generate_diff
 
 JSON = 'json'
 PLAIN = 'plain'
