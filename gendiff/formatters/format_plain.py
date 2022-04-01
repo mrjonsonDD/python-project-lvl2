@@ -39,7 +39,15 @@ def stringify_node(item,  parent_key=''):
 
     if item_type == NESTED:
         children = item_value.get(CHILDREN)
-        items_children = to_plain(children, key)
+        result = ''
+        children_diff = children.items()
+        lines = []
+        for child in children_diff:
+            child_key, child_value = child
+            if child_value.get(TYPE) != UNCHANGED:
+                lines.append(stringify_node(child, key))
+
+            items_children = '\n'.join(lines)
         return items_children     
         
     if item_type == UPDATED:
