@@ -27,13 +27,13 @@ def to_plain(diff, parent_key=''):
     return result
             
     
-def stringify_node(item, level):
+def stringify_node(item,  parent_key=''):
 
     current_key, item_value = item
 
     item_type = item_value.get(TYPE)
-    if level:
-        key = f"{level}.{current_key}"
+    if parent_key:
+        key = f"{parent_key}.{current_key}"
     else:
         key = current_key
 
